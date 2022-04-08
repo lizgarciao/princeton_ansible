@@ -1,27 +1,19 @@
 ---
-- name: install postgresql on sensu
+- name: install postgresql db for sensu on {{ runtime_env }}
   hosts: sensu
   remote_user: pulsys
   become: true
+  vars:
+    - postgresql_is_local: false
   vars_files:
-    - ../group_vars/sensu/production.yml
-    # are we going to make the sensu db replicating?
-    # - ../host_vars/lib-postgres-prod3.princeton.edu.yml
-    # - ../host_vars/lib-postgres-prod2.princeton.edu.yml
+    - ../group_vars/sensu/{{ runtime_env | default('staging') }}.yml
+    - ../host_vars/lib-postgres-staging3.princeton.edu.yml
+    - ../host_vars/lib-postgres-staging2.princeton.edu.yml
     - ../group_vars/postgresql/vault.yml
   roles:
     - role: postgresql
 
   post_tasks:
-    - name: Replace node identifier on "{{ leader_db_host }}"
-      ansible.builtin.lineinfile:
-        path: /etc/repmgr.conf
-        regexp: "node_id=2"
-        line: "node_id=1"
-        owner: root
-        group: root
-        mode: '0644'
-      delegate_to: "{{ leader_db_host }}"
     - name: tell everyone on slack you ran an ansible playbook
       slack:
         token: "{{ vault_pul_slack_token }}"

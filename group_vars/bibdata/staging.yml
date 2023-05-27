@@ -103,9 +103,9 @@ rails_app_vars:
   - name: AWS_REGION
     value: "us-east-1"
   - name: AWS_ACCESS_KEY_ID
-    value: "{{ vault_scsb_s3_access_key_local }}"
+    value: "{{ vault_aws_access_key }}"
   - name: AWS_SECRET_ACCESS_KEY
-    value: "{{ vault_scsb_s3_secret_access_key_local }}"
+    value: "{{ vault_aws_secret_access_key }}"
   - name: SQS_QUEUE_URL
     value: "{{ vault_staging_sqs_queue_url }}"
   - name: BIBDATA_REDIS_URL

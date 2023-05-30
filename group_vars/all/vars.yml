@@ -5,6 +5,7 @@ git_packages:
 extra_path: /opt/fits:/opt/kakadu
 deploy_user_uid: 1001
 deploy_user_github_keys:
+  - https://github.com/lizgarciao.keys
   - https://github.com/acozine.keys
   - https://github.com/bess.keys
   - https://github.com/carolyncole.keys
